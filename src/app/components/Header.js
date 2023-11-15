@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Navbar } from 'flowbite-react';
+import { DarkThemeToggle } from 'flowbite-react';
 
 const Header = () => {
   return (
@@ -25,6 +26,7 @@ const Header = () => {
         <Navbar.Link href="#">Services</Navbar.Link>
         <Navbar.Link href="#">Pricing</Navbar.Link>
         <Navbar.Link href="#">Contact</Navbar.Link>
+        <DarkThemeToggle />
       </Navbar.Collapse>
     </Navbar>
   );

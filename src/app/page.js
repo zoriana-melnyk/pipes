@@ -2,13 +2,14 @@
 
 import { Flowbite } from 'flowbite-react';
 import { AppFooter, Header,  } from './components';
+import { Products } from './containers/Products';
 
 export default function HomePage() {
   return (
     <Flowbite>
       <Header />
       <main>
-        <h1>Pipis</h1>
+        <Products />
       </main>
       <AppFooter />
     </Flowbite>

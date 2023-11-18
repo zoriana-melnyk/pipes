@@ -1,18 +1,20 @@
 import Link from 'next/link';
 import { Navbar } from 'flowbite-react';
 import { DarkThemeToggle } from 'flowbite-react';
+import logo from '../img/icon.png';
+import Image from 'next/image';
 
 const Header = () => {
   return (
     <Navbar fluid rounded>
       <Navbar.Brand as={Link} href="/">
-        <img
-          src="https://img.freepik.com/premium-vector/a-blue-square-with-a-globe-icon-on-it_876006-15.jpg"
-          className="mr-3 h-6 sm:h-9"
-          alt="Flowbite React Logo"
+        <Image
+          src={logo}
+          width={49} height={6}
+          alt="App-Logo"
         />
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white text-blue-800">
-          Flowbite React
+        <span className="self-center whitespace-nowrap text-xl font-semibold text-black dark:text-white">
+          Поліпресмаш
         </span>
       </Navbar.Brand>
       <Navbar.Toggle />

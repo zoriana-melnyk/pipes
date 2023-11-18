@@ -6,10 +6,8 @@ import Skeleton from './HOC/skeleton';
 
 export default function HomePage() {
   return (
-    <Flowbite>
-      <Skeleton>
-        <Products />
-      </Skeleton>
-    </Flowbite>
+    <Skeleton>
+      <Products />
+    </Skeleton>
   );
 }

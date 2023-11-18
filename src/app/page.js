@@ -1,17 +1,15 @@
 'use client';
 
 import { Flowbite } from 'flowbite-react';
-import { AppFooter, Header,  } from './components';
 import { Products } from './containers/Products';
+import Skeleton from './HOC/skeleton';
 
 export default function HomePage() {
   return (
     <Flowbite>
-      <Header />
-      <main>
+      <Skeleton>
         <Products />
-      </main>
-      <AppFooter />
+      </Skeleton>
     </Flowbite>
   );
 }

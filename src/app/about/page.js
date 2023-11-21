@@ -1,31 +1,21 @@
-
 'use client';
 
-import Link from 'next/link';
-import { Navbar } from 'flowbite-react';
+import Skeleton from '../HOC/skeleton';
 
 export default function HomePage() {
-    return (
-        <>
-            <Navbar fluid rounded>
-                <Navbar.Brand as={Link} href="/">
-                    <img src="https://img.freepik.com/premium-vector/a-blue-square-with-a-globe-icon-on-it_876006-15.jpg" className="mr-3 h-6 sm:h-9" alt="Flowbite React Logo" />
-                    <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Flowbite React</span>
-                </Navbar.Brand>
-                <Navbar.Toggle />
-                <Navbar.Collapse>
-                    <Navbar.Link href="#" active>
-                        Home
-                    </Navbar.Link>
-                    <Navbar.Link as={Link} href="#">
-                        About
-                    </Navbar.Link>
-                    <Navbar.Link href="#">Services</Navbar.Link>
-                    <Navbar.Link href="#">Pricing</Navbar.Link>
-                    <Navbar.Link href="#">Contact</Navbar.Link>
-                </Navbar.Collapse>
-            </Navbar>
-            <h2>about page</h2>
-        </>
-    );
+  return (
+    <Skeleton>
+      <div>
+        <h1>About Us</h1>
+        <p>
+          React, Redux and React Router in ES6 for ultra-responsive web apps.
+        </p>
+        <h2>Our Mission</h2>
+        <p>We strive to create the most user-friendly web apps.</p>
+        <h2>Our Team</h2>
+        <p>We have a dedicated team of experienced developers.</p>
+      </div>
+      export default About;
+    </Skeleton>
+  );
 }

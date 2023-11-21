@@ -1,7 +1,7 @@
-import { Inter } from 'next/font/google';
+import { Sofia_Sans } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const sofia = Sofia_Sans({ subsets: ['latin'], weight: '600', });
 
 export const metadata = {
   title: 'Create Next App',
@@ -10,8 +10,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html>
+      <body className={sofia.className} suppressHydrationWarning={true}>{children}</body>
     </html>
   );
 }

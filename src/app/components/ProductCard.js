@@ -1,20 +1,22 @@
 
 import { Card } from 'flowbite-react';
+import Image from 'next/image';
 
-function ProductCard() {
+function ProductCard({ title, text, image }) {
   return (
     <Card
-      className="max-w-sm"
-      imgAlt="Meaningful alt text for an image that is not purely decorative"
-      imgSrc="https://www.flowbite-react.com/images/blog/image-1.jpg"
+      className="flex flex-col items-center justify-center p-8 text-center "
+      renderImage={() => <Image
+        style={{ aspectRatio: '1 / 1', width: '200px', height: 'auto' }}
+        src={image} alt="pipes_img" />}
     >
       <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-        Noteworthy technology acquisitions 2021
+        {title}
       </h5>
       <p className="font-normal text-gray-700 dark:text-gray-400">
-        Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
+        {text}
       </p>
-    </Card>
+    </ Card >
   );
 }
 

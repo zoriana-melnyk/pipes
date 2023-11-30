@@ -3,12 +3,11 @@ import { Navbar } from 'flowbite-react';
 import { DarkThemeToggle } from 'flowbite-react';
 import logo from '../img/icon.png';
 import Image from 'next/image';
-import { useLocation } from 'react-router-dom';
+import { usePathname } from 'next/navigation'
 
 const Header = () => {
-  const location = useLocation();
+  const pathname = usePathname();
 
-  const activePathname = location.pathname;
   return (
     <Navbar fluid rounded>
       <Navbar.Brand as={Link} href="/">
@@ -23,22 +22,22 @@ const Header = () => {
       </Navbar.Brand>
       <Navbar.Toggle />
       <Navbar.Collapse>
-        <Navbar.Link as={Link} href="/" active={activePathname === '/'} >
+        <Navbar.Link as={Link} href="/" active={pathname === '/'} >
           Головна
         </Navbar.Link>
-        <Navbar.Link as={Link} href="/about" active={activePathname === '/about'} >
+        <Navbar.Link as={Link} href="/about" active={pathname === '/about'} >
           Про нас
         </Navbar.Link>
-        <Navbar.Link as={Link} href="/product" active={activePathname === '/product'}>
+        <Navbar.Link as={Link} href="/product" active={pathname === '/product'}>
           Продукція
         </Navbar.Link>
-        <Navbar.Link as={Link} href="/price" active={activePathname === '/price'}>
+        <Navbar.Link as={Link} href="/price" active={pathname === '/price'}>
           Ціни
         </Navbar.Link>
-        <Navbar.Link as={Link} href="/contact" active={activePathname === '/contact'}>
+        <Navbar.Link as={Link} href="/contact" active={pathname === '/contact'}>
           Контакти
         </Navbar.Link>
-        <Navbar.Link as={Link} href="/search" active={activePathname === '/search'}>Пошук</Navbar.Link>
+        <Navbar.Link as={Link} href="/search" active={pathname === '/search'}>Пошук</Navbar.Link>
         <DarkThemeToggle />
       </Navbar.Collapse>
     </Navbar>

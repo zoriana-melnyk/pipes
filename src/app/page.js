@@ -1,6 +1,6 @@
 'use client';
 
-import { Products } from './containers/Products';
+import { Products } from './containers/ProductsContainer';
 import Skeleton from './HOC/skeleton';
 
 export default function HomePage() {

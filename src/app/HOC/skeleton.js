@@ -14,7 +14,6 @@ const Skeleton = ({ children }) => {
         <AppFooter />
       </BrowserRouter>
     </Flowbite>
-
   );
 };
 

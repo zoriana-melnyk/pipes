@@ -7,6 +7,8 @@ import { useLocation } from 'react-router-dom';
 
 const Header = () => {
   const location = useLocation();
+
+  const activePathname = location.pathname;
   return (
     <Navbar fluid rounded>
       <Navbar.Brand as={Link} href="/">
@@ -21,22 +23,22 @@ const Header = () => {
       </Navbar.Brand>
       <Navbar.Toggle />
       <Navbar.Collapse>
-        <Navbar.Link as={Link} href="/" active={location.pathname === '/'} >
+        <Navbar.Link as={Link} href="/" active={activePathname === '/'} >
           Головна
         </Navbar.Link>
-        <Navbar.Link as={Link} href="/about" active={location.pathname === '/about'} >
+        <Navbar.Link as={Link} href="/about" active={activePathname === '/about'} >
           Про нас
         </Navbar.Link>
-        <Navbar.Link as={Link} href="/product" active={location.pathname === '/product'}>
+        <Navbar.Link as={Link} href="/product" active={activePathname === '/product'}>
           Продукція
         </Navbar.Link>
-        <Navbar.Link as={Link} href="/price" active={location.pathname === '/price'}>
+        <Navbar.Link as={Link} href="/price" active={activePathname === '/price'}>
           Ціни
         </Navbar.Link>
-        <Navbar.Link as={Link} href="/contact" active={location.pathname === '/contact'}>
+        <Navbar.Link as={Link} href="/contact" active={activePathname === '/contact'}>
           Контакти
         </Navbar.Link>
-        <Navbar.Link as={Link} href="/search" active={location.pathname === '/search'}>Пошук</Navbar.Link>
+        <Navbar.Link as={Link} href="/search" active={activePathname === '/search'}>Пошук</Navbar.Link>
         <DarkThemeToggle />
       </Navbar.Collapse>
     </Navbar>

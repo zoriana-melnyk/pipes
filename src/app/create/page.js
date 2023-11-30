@@ -124,7 +124,7 @@ export default function HomePage() {
                 <form onSubmit={onSubmitUser}>
                     <Label>User</Label>
 
-                    <TextInput name="name" placeholder='name' required />
+                    <TextInput name="firstName" placeholder='firstName' required />
                     <TextInput name="secondName" placeholder='secondName' required />
                     <TextInput name="phoneNumber" placeholder='phone' required />
                     <TextInput name="email" placeholder='email' required />

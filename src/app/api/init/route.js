@@ -52,35 +52,35 @@ const usersMock = [
 
 const productsMock = [
   {
-    name: 'Труба безшовна',
-    description: 'Труба безшовна',
-    price: 100,
+    name: 'Плівка поліетиленова',
+    description: 'Плівка поліетиленова: рукав, пів рукав, полотно.Первинна, вторинна, кольорова.',
+    price: 10,
+    currency: 'грн',
+    imageSrc: 'pipes_film.png',
+    category: 'category id'
+  },
+  {
+    name: 'Труба для теплої підлоги',
+    description: 'Труба для теплої підлоги SLQ Tece 16x2',
+    price: 10,
     currency: 'грн',
     imageSrc: 'pipes_floor.png',
     category: 'category id'
   },
   {
-    name: 'Труба електрозварна',
-    description: 'Труба електрозварна',
-    price: 100,
+    name: 'Поліетиленова труба',
+    description: 'Поліетиленова труба синя первинка ф32 х 2.5-3.0-3,4мм внутрішня стінка',
+    price: 80,
     currency: 'грн',
-    imageSrc: 'pipes_floor.png',
+    imageSrc: 'pipes_wal.png',
     category: 'category id'
   },
   {
-    name: 'Труба водогазопровідна',
-    description: 'Труба водогазопровідна',
-    price: 100,
+    name: 'Труба для утеплення',
+    description: 'Труба 16X2 PEX-A для опалення.Для підігрівання підлоги.PEX.',
+    price: 80,
     currency: 'грн',
-    imageSrc: 'pipes_floor.png',
-    category: 'category id'
-  },
-  {
-    name: 'Труба квадратна',
-    description: 'Труба квадратна',
-    price: 100,
-    currency: 'грн',
-    imageSrc: 'pipes_floor.png',
+    imageSrc: 'pipes_warm.png',
     category: 'category id'
   },
   {
@@ -88,7 +88,7 @@ const productsMock = [
     description: 'Труба профільна',
     price: 100,
     currency: 'грн',
-    imageSrc: 'pipes_floor.png',
+    imageSrc: 'pipes_film.png',
     category: 'category id'
   },
 
@@ -97,7 +97,7 @@ const productsMock = [
     description: 'Труба пластикова',
     price: 100,
     currency: 'грн',
-    imageSrc: 'pipes_floor.png',
+    imageSrc: 'pipes_wal.png',
     category: 'category id'
   },
   {

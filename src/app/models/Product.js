@@ -4,7 +4,6 @@ import { collectionNames } from "./helpers";
 const ProductSchema = mongoose.Schema({
     name: String,
     description: String,
-    amount: Number,
     price: Number,
     currency: { type: String, default: 'грн' },
     imageSrc: String,

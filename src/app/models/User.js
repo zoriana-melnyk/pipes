@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { collectionNames } from "./helpers";
 
 const UserScheme = new mongoose.Schema({
-    name: String,
+    firstName: String,
     secondName: String,
     phoneNumber: Number,
     email: String,

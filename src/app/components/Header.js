@@ -25,19 +25,13 @@ const Header = () => {
         <Navbar.Link as={Link} href="/" active={pathname === '/'} >
           Головна
         </Navbar.Link>
-        <Navbar.Link as={Link} href="/about" active={pathname === '/about'} >
-          Про нас
-        </Navbar.Link>
-        <Navbar.Link as={Link} href="/product" active={pathname === '/product'}>
-          Продукція
-        </Navbar.Link>
+        <Navbar.Link as={Link} href="/search" active={pathname === '/search'}>Пошук</Navbar.Link>
         <Navbar.Link as={Link} href="/price" active={pathname === '/price'}>
           Ціни
         </Navbar.Link>
-        <Navbar.Link as={Link} href="/contact" active={pathname === '/contact'}>
-          Контакти
+        <Navbar.Link as={Link} href="/about" active={pathname === '/about'} >
+          Про нас
         </Navbar.Link>
-        <Navbar.Link as={Link} href="/search" active={pathname === '/search'}>Пошук</Navbar.Link>
         <DarkThemeToggle />
       </Navbar.Collapse>
     </Navbar>

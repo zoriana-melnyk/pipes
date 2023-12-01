@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import Skeleton from '../HOC/skeleton';
+import { useContext, useEffect, useState } from 'react';
 import { Spinner, TextInput } from 'flowbite-react';
 import { ProductCard } from '../components';
+import { CartContext } from '../service/CartContext';
 
 const SearchContainer = () => {
   const [query, setQuery] = useState('');
@@ -23,9 +23,14 @@ const SearchContainer = () => {
   const filteredProducts = producs.filter((product) => {
     return product.name.toLowerCase().includes(query.toLowerCase());
   });
+  const { dispatch } = useContext(CartContext);
+
+  const addToCart = (product) => {
+    dispatch({ type: 'ADD_PRODUCT', product });
+  }
 
   return (
-    <Skeleton>
+    <>
       <div className="m-4">
         <h1>Search Products</h1>
         <TextInput
@@ -40,17 +45,15 @@ const SearchContainer = () => {
           filteredProducts.map((product, index) => (
             <ProductCard
               key={product._id}
-              title={product.name}
-              text={product.description}
-              image={`http://localhost:3000/${product.imageSrc}`}
-              price={`${product.price} ${product.currency}`}
+              product={product}
+              actions={{ addToCart }}
             />
           ))
         ) : (
           <Spinner />
         )}
       </div>
-    </Skeleton>
+    </>
   );
 };
 

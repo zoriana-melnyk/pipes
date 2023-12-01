@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ProductCard } from '../components';
 import { Spinner } from 'flowbite-react';
+import { CartContext } from '../service/CartContext';
 
 function Products() {
   const [producs, setProducts] = useState([]);
@@ -12,6 +13,10 @@ function Products() {
     };
     fetchData();
   }, []);
+  const { dispatch } = useContext(CartContext);
+  const addToCart = (product) => {
+    dispatch({ type: 'ADD_PRODUCT', product });
+  };
 
   return (
     <div className="grid my-6 gap-6 mb-8 mx-10 md:grid-cols-2 xl:grid-cols-4">
@@ -19,10 +24,8 @@ function Products() {
         producs.map((product) => (
           <ProductCard
             key={product._id}
-            title={product.name}
-            text={product.description}
-            image={`http://localhost:3000/${product.imageSrc}`}
-            price={`${product.price} ${product.currency}`}
+            product={product}
+            actions={{ addToCart }}
           />
         ))
       ) : (

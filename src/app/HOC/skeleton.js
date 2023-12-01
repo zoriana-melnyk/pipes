@@ -9,7 +9,7 @@ const Skeleton = ({ children }) => {
       <CartProvider>
         <Header />
         <Suspense fallback={<Spinner />}>
-          <main className="main main__container">{children}</main>
+          <main className="main main__container flex flex-col">{children}</main>
         </Suspense>
         <AppFooter />
       </CartProvider>

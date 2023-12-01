@@ -5,12 +5,18 @@ import logo from '../img/icon.png';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { CartContext } from '../service/CartContext';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import UserIcon from '../img/icon_user.svg';
 
 const Header = () => {
   const pathname = usePathname();
   const { selectedProducts } = useContext(CartContext);
+  const [storedUser, setStoredUser] = useState({});
+
+  useEffect(() => {
+    const user = JSON.parse(window.localStorage.getItem('user') || '{}');
+    setStoredUser(user);
+  }, []);
 
   const NotificationBudge = () => {
     const amount = [...selectedProducts].length;
@@ -28,7 +34,7 @@ const Header = () => {
 
   const UserSection = ({ children }) => {
     // TODO: login check
-    const isLoggedIn = false;
+    const isLoggedIn = storedUser.name;
 
     if (isLoggedIn) {
       return (
@@ -40,7 +46,7 @@ const Header = () => {
               <div className="relative">
                 <Avatar
                   alt="User settings"
-                  img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                  img={storedUser.avatarUrl}
                   rounded
                 />
                 <NotificationBudge />
@@ -50,7 +56,7 @@ const Header = () => {
             <Dropdown.Header>
               <span className="block text-sm"> </span>
               <span className="block truncate text-sm font-medium">
-                Anonimous@dev.com
+                {storedUser.email}
               </span>
             </Dropdown.Header>
             <Dropdown.Item>
@@ -86,8 +92,8 @@ const Header = () => {
         />
         <Navbar.Link
           as={Link}
-          href="/login"
-          active={pathname === '/login'}
+          href="/profile"
+          active={pathname === '/profile'}
           className="flex items-center list-none border-none text-sm"
         >
           Вхід

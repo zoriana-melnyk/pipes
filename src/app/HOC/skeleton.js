@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { AppFooter, Header } from '../components';
-import { Flowbite } from 'flowbite-react';
-import { BrowserRouter } from 'react-router-dom';
+import { Flowbite, Spinner } from 'flowbite-react';
+import { CartProvider } from '../service/CartContext';
 
 const Skeleton = ({ children }) => {
   return (
     <Flowbite>
-      <BrowserRouter>
+      <CartProvider>
         <Header />
-        <main className="main main__container">
-          {children}
-        </main>
+        <Suspense fallback={<Spinner />}>
+          <main className="main main__container">{children}</main>
+        </Suspense>
         <AppFooter />
-      </BrowserRouter>
+      </CartProvider>
     </Flowbite>
-
   );
 };
 

@@ -1,4 +1,9 @@
 
+## Setup
+- Create test DB 
+  1. `yarn dev`
+  2. go to [LINK](http://localhost:3000/api/init)
+
 ## Getting Started
 
 First, run the development server:

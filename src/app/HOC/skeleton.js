@@ -1,18 +1,18 @@
 import React, { Suspense } from 'react';
 import { AppFooter, Header } from '../components';
 import { Flowbite, Spinner } from 'flowbite-react';
-import { CartProvider } from '../service/CartContext';
+import { AppContextProvider } from '../service/AppContext';
 
 const Skeleton = ({ children }) => {
   return (
     <Flowbite>
-      <CartProvider>
+      <AppContextProvider>
         <Header />
         <Suspense fallback={<Spinner />}>
           <main className="main main__container flex flex-col">{children}</main>
         </Suspense>
         <AppFooter />
-      </CartProvider>
+      </AppContextProvider>
     </Flowbite>
   );
 };

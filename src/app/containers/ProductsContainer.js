@@ -1,10 +1,17 @@
 import { useContext, useEffect, useState } from 'react';
 import { ProductCard } from '../components';
 import { Spinner } from 'flowbite-react';
-import { CartContext } from '../service/CartContext';
+import { AppContext } from '../service/AppContext';
+import { ADD_PRODUCT } from '../service/contextDispatchTypes';
 
 function Products() {
   const [producs, setProducts] = useState([]);
+  const { dispatch } = useContext(AppContext);
+
+  const addToCart = (product) => {
+    dispatch({ type: ADD_PRODUCT, product });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch('/api/product');
@@ -13,10 +20,6 @@ function Products() {
     };
     fetchData();
   }, []);
-  const { dispatch } = useContext(CartContext);
-  const addToCart = (product) => {
-    dispatch({ type: 'ADD_PRODUCT', product });
-  };
 
   return (
     <div className="grid my-6 gap-6 mb-8 mx-10 md:grid-cols-2 xl:grid-cols-4">

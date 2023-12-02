@@ -4,19 +4,20 @@ import { DarkThemeToggle } from 'flowbite-react';
 import logo from '../img/icon.png';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { CartContext } from '../service/CartContext';
+import { AppContext } from '../service/AppContext';
 import { useContext, useEffect, useState } from 'react';
 import UserIcon from '../img/icon_user.svg';
+import { REMOVE_USER } from '../service/contextDispatchTypes';
 
 const Header = () => {
   const pathname = usePathname();
-  const { selectedProducts } = useContext(CartContext);
-  const [storedUser, setStoredUser] = useState({});
+  const appState = useContext(AppContext);
+  const { selectedProducts, user, dispatch } = appState;
+  const storedUser = user || {};
 
-  useEffect(() => {
-    const user = JSON.parse(window.localStorage.getItem('user') || '{}');
-    setStoredUser(user);
-  }, []);
+  const onLogout = () => {
+    dispatch({ type: REMOVE_USER });
+  };
 
   const NotificationBudge = () => {
     const amount = [...selectedProducts].length;
@@ -75,7 +76,7 @@ const Header = () => {
               </Navbar.Link>
             </Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item>Вийти</Dropdown.Item>
+            <Dropdown.Item onClick={onLogout}>Вийти</Dropdown.Item>
           </Dropdown>
 
           {children}

@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { Spinner, TextInput } from 'flowbite-react';
 import { ProductCard } from '../components';
-import { CartContext } from '../service/CartContext';
+import { AppContext } from '../service/AppContext';
+import { ADD_PRODUCT } from '../service/contextDispatchTypes';
 
 const SearchContainer = () => {
   const [query, setQuery] = useState('');
@@ -23,10 +24,10 @@ const SearchContainer = () => {
   const filteredProducts = producs.filter((product) => {
     return product.name.toLowerCase().includes(query.toLowerCase());
   });
-  const { dispatch } = useContext(CartContext);
+  const { dispatch } = useContext(AppContext);
 
   const addToCart = (product) => {
-    dispatch({ type: 'ADD_PRODUCT', product });
+    dispatch({ type: ADD_PRODUCT, product });
   }
 
   return (

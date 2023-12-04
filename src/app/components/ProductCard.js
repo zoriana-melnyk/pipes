@@ -21,7 +21,7 @@ function ProductCard({ product, actions, isSelected }) {
       <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
         {title}
       </h5>
-      <p className="font-normal text-gray-700 dark:text-gray-400">
+      <p className="max-w-xs font-normal text-gray-700 dark:text-gray-400">
         {description}
       </p>
       <div className="items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4 rtl:space-x-reverse">

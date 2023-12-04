@@ -13,7 +13,7 @@ function CartContainer() {
   };
 
   return (
-    <div className="m-10">
+    <div className="flex flex-wrap gap-5">
       {selectedProducts.length ? (
         selectedProducts.map((product) => {
           return (

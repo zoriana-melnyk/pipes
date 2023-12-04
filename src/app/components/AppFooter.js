@@ -6,11 +6,8 @@ import ua_region from '../img/logo_mob_ua_region.svg';
 import allbiz_new from '../img/allbiz_logo_new.svg';
 import map from '../img/map.png';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 const AppFooter = () => {
-  const pathname = usePathname();
-
   return (
     <Footer container>
       <div className="flex flex-col w-full text-center">
@@ -23,21 +20,17 @@ const AppFooter = () => {
             name="Поліпресмаш"
           />
           <Footer.LinkGroup className="flex gap-2">
-            <Footer.Link as={Link} href="/" active={pathname === '/'}>
+            <Footer.Link as={Link} href="/">
               Головна
             </Footer.Link>
-            <Footer.Link
-              as={Link}
-              href="/search"
-              active={pathname === '/search'}
-            >
+            <Footer.Link as={Link} href="/search">
               Пошук
             </Footer.Link>
-            <Footer.Link as={Link} href="/about" active={pathname === '/about'}>
+            <Footer.Link as={Link} href="/about">
               Про нас
             </Footer.Link>
           </Footer.LinkGroup>
-          <div class>
+          <div>
             <Label>Ми на карті</Label>
             <Image
               src={map}

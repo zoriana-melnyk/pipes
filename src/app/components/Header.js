@@ -5,7 +5,7 @@ import logo from '../img/icon.png';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { AppContext } from '../service/AppContext';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import UserIcon from '../img/icon_user.svg';
 import { REMOVE_USER } from '../service/contextDispatchTypes';
 

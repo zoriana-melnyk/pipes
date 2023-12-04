@@ -60,21 +60,19 @@ const Header = () => {
                 {storedUser.email}
               </span>
             </Dropdown.Header>
-            <Dropdown.Item>
-              <Navbar.Link
-                as={Link}
-                href="/profile"
-                active={pathname === '/profile'}
-              >
-                Налаштування
-              </Navbar.Link>
-            </Dropdown.Item>
-            <Dropdown.Item className="relative">
-              <Navbar.Link as={Link} href="/cart" active={pathname === '/cart'}>
+            <Navbar.Link
+              as={Link}
+              href="/profile"
+              active={pathname === '/profile'}
+            >
+              <Dropdown.Item>Налаштування</Dropdown.Item>
+            </Navbar.Link>
+            <Navbar.Link as={Link} href="/cart" active={pathname === '/cart'}>
+              <Dropdown.Item className="relative">
                 Кошик
                 <NotificationBudge />
-              </Navbar.Link>
-            </Dropdown.Item>
+              </Dropdown.Item>
+            </Navbar.Link>
             <Dropdown.Divider />
             <Dropdown.Item onClick={onLogout}>Вийти</Dropdown.Item>
           </Dropdown>

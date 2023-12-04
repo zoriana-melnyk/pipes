@@ -6,7 +6,7 @@ import { ADD_PRODUCT } from '../service/contextDispatchTypes';
 
 function Products() {
   const [producs, setProducts] = useState([]);
-  const { dispatch } = useContext(AppContext);
+  const { dispatch, selectedProducts } = useContext(AppContext);
 
   const addToCart = (product) => {
     dispatch({ type: ADD_PRODUCT, product });
@@ -29,10 +29,13 @@ function Products() {
             key={product._id}
             product={product}
             actions={{ addToCart }}
+            isSelected={selectedProducts.some(
+              (selectedProduct) => selectedProduct._id === product._id
+            )}
           />
         ))
       ) : (
-        <Spinner />
+        <Spinner size="xl" />
       )}
     </div>
   );

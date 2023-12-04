@@ -8,7 +8,7 @@ const Skeleton = ({ children }) => {
     <Flowbite>
       <AppContextProvider>
         <Header />
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<Spinner size="xl" />}>
           <main className="main main__container flex flex-col mx-5 my-3">{children}</main>
         </Suspense>
         <AppFooter />

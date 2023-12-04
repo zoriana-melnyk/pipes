@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Spinner, TextInput } from 'flowbite-react';
+import { Label, Spinner, TextInput } from 'flowbite-react';
 import { ProductCard } from '../components';
 import { AppContext } from '../service/AppContext';
 import { ADD_PRODUCT } from '../service/contextDispatchTypes';
@@ -24,16 +24,16 @@ const SearchContainer = () => {
   const filteredProducts = producs.filter((product) => {
     return product.name.toLowerCase().includes(query.toLowerCase());
   });
-  const { dispatch } = useContext(AppContext);
+  const { dispatch, selectedProducts } = useContext(AppContext);
 
   const addToCart = (product) => {
     dispatch({ type: ADD_PRODUCT, product });
-  }
+  };
 
   return (
     <>
-      <div className="m-4">
-        <h1>Search Products</h1>
+      <div className="my-4">
+        <Label>Search Products</Label>
         <TextInput
           type="text"
           value={query}
@@ -41,17 +41,20 @@ const SearchContainer = () => {
           placeholder="Search for products..."
         />
       </div>
-      <div className="grid m-6 gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
         {producs.length ? (
           filteredProducts.map((product, index) => (
             <ProductCard
               key={product._id}
               product={product}
               actions={{ addToCart }}
+              isSelected={selectedProducts.some(
+                (selectedProduct) => selectedProduct._id === product._id
+              )}
             />
           ))
         ) : (
-          <Spinner />
+          <Spinner size="xl" />
         )}
       </div>
     </>

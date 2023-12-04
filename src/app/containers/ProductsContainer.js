@@ -22,7 +22,7 @@ function Products() {
   }, []);
 
   return (
-    <div className="grid my-6 gap-6 mb-8 mx-10 md:grid-cols-2 xl:grid-cols-4">
+    <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
       {producs.length ? (
         producs.map((product) => (
           <ProductCard

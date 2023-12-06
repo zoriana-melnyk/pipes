@@ -4,19 +4,20 @@ import { DarkThemeToggle } from 'flowbite-react';
 import logo from '../img/icon.png';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { CartContext } from '../service/CartContext';
-import { useContext, useEffect, useState } from 'react';
+import { AppContext } from '../service/AppContext';
+import { useContext } from 'react';
 import UserIcon from '../img/icon_user.svg';
+import { REMOVE_USER } from '../service/contextDispatchTypes';
 
 const Header = () => {
   const pathname = usePathname();
-  const { selectedProducts } = useContext(CartContext);
-  const [storedUser, setStoredUser] = useState({});
+  const appState = useContext(AppContext);
+  const { selectedProducts, user, dispatch } = appState;
+  const storedUser = user || {};
 
-  useEffect(() => {
-    const user = JSON.parse(window.localStorage.getItem('user') || '{}');
-    setStoredUser(user);
-  }, []);
+  const onLogout = () => {
+    dispatch({ type: REMOVE_USER });
+  };
 
   const NotificationBudge = () => {
     const amount = [...selectedProducts].length;
@@ -59,23 +60,21 @@ const Header = () => {
                 {storedUser.email}
               </span>
             </Dropdown.Header>
-            <Dropdown.Item>
-              <Navbar.Link
-                as={Link}
-                href="/profile"
-                active={pathname === '/profile'}
-              >
-                Налаштування
-              </Navbar.Link>
-            </Dropdown.Item>
-            <Dropdown.Item className="relative">
-              <Navbar.Link as={Link} href="/cart" active={pathname === '/cart'}>
+            <Navbar.Link
+              as={Link}
+              href="/profile"
+              active={pathname === '/profile'}
+            >
+              <Dropdown.Item>Налаштування</Dropdown.Item>
+            </Navbar.Link>
+            <Navbar.Link as={Link} href="/cart" active={pathname === '/cart'}>
+              <Dropdown.Item className="relative">
                 Кошик
                 <NotificationBudge />
-              </Navbar.Link>
-            </Dropdown.Item>
+              </Dropdown.Item>
+            </Navbar.Link>
             <Dropdown.Divider />
-            <Dropdown.Item>Вийти</Dropdown.Item>
+            <Dropdown.Item onClick={onLogout}>Вийти</Dropdown.Item>
           </Dropdown>
 
           {children}

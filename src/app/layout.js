@@ -15,7 +15,10 @@ const sofia = Sofia_Sans({ subsets: ['latin'], weight: '600' });
 export default function RootLayout({ children }) {
   return (
     <html>
-      <body className={sofia.className} suppressHydrationWarning={true}>
+      <body
+        className={`${sofia.className} bg-white bg-slate-200 dark:bg-slate-800`}
+        suppressHydrationWarning={true}
+      >
         <Skeleton>{children}</Skeleton>
       </body>
     </html>

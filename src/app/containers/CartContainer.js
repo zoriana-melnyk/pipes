@@ -1,18 +1,19 @@
 'use client';
 
 import { useContext } from 'react';
-import { CartContext } from '../service/CartContext';
+import { AppContext } from '../service/AppContext';
 import { ProductCard } from '../components';
+import { REMOVE_PRODUCT } from '../service/contextDispatchTypes';
 
 function CartContainer() {
-  const { selectedProducts, dispatch } = useContext(CartContext);
+  const { selectedProducts, dispatch } = useContext(AppContext);
 
   const removeFromCart = (product) => {
-    dispatch({ type: 'REMOVE_PRODUCT', product });
+    dispatch({ type: REMOVE_PRODUCT, product });
   };
 
   return (
-    <div className="m-10">
+    <div className="flex flex-wrap gap-5">
       {selectedProducts.length ? (
         selectedProducts.map((product) => {
           return (

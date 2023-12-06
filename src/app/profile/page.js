@@ -3,10 +3,11 @@
 import { Button } from 'flowbite-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AppContext } from '../service/AppContext';
+import { SET_USER } from '../service/contextDispatchTypes';
 
 export default function User() {
-  const { push } = useRouter();
   const initialUser = {
     name: '',
     avatarUrl: '',
@@ -14,6 +15,12 @@ export default function User() {
     email: '',
   };
   const [user, setUser] = useState(initialUser);
+  const { push } = useRouter();
+  const { dispatch } = useContext(AppContext);
+
+  const setUserAction = (user) => {
+    dispatch({ type: SET_USER, payload: user });
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -29,6 +36,7 @@ export default function User() {
 
     // store user object in local storage
     window.localStorage.setItem('user', JSON.stringify(body));
+    setUserAction(body);
 
     // redirect to home page
     push('/');

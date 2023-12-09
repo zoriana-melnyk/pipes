@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { ProductCard } from '../components';
 import { Spinner, Pagination } from 'flowbite-react';
 import { AppContext } from '../service/AppContext';
-import { ADD_PRODUCT } from '../service/contextDispatchTypes';
+import { ADD_PRODUCT, REMOVE_PRODUCT } from '../service/contextDispatchTypes';
 
 function Products() {
   const perPage = 10;
@@ -17,6 +17,10 @@ function Products() {
   const addToCart = (product) => {
     dispatch({ type: ADD_PRODUCT, product });
   };
+
+  const removeFromCart = (product) => {
+    dispatch({ type: REMOVE_PRODUCT, product });
+  }
 
   const onPageChange = (page) => {
     setCurrentPage(page);
@@ -57,7 +61,7 @@ function Products() {
             <ProductCard
               key={product._id}
               product={product}
-              actions={{ addToCart }}
+              actions={{ addToCart, removeFromCart }}
               isSelected={selectedProducts.some(
                 (selectedProduct) => selectedProduct._id === product._id
               )}

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Label, Spinner, TextInput, Pagination } from 'flowbite-react';
 import { ProductCard } from '../components';
 import { AppContext } from '../service/AppContext';
-import { ADD_PRODUCT } from '../service/contextDispatchTypes';
+import { ADD_PRODUCT, REMOVE_PRODUCT } from '../service/contextDispatchTypes';
 
 const SearchContainer = () => {
   const perPage = 4;
@@ -59,6 +59,10 @@ const SearchContainer = () => {
     dispatch({ type: ADD_PRODUCT, product });
   };
 
+  const removeFromCart = (product) => {
+    dispatch({ type: REMOVE_PRODUCT, product });
+  }
+
   return (
     <>
       <div className="my-4">
@@ -76,7 +80,7 @@ const SearchContainer = () => {
             <ProductCard
               key={product._id}
               product={product}
-              actions={{ addToCart }}
+              actions={{ addToCart, removeFromCart }}
               isSelected={selectedProducts.some(
                 (selectedProduct) => selectedProduct._id === product._id
               )}

@@ -35,7 +35,7 @@ const Header = () => {
 
   const UserSection = ({ children }) => {
     // TODO: login check
-    const isLoggedIn = storedUser.name;
+    const isLoggedIn = storedUser.email;
 
     if (isLoggedIn) {
       return (
@@ -91,8 +91,7 @@ const Header = () => {
         />
         <Navbar.Link
           as={Link}
-          href="/profile"
-          active={pathname === '/profile'}
+          href={isLoggedIn ? '/profile' : '/login'}
           className="flex items-center list-none border-none text-sm"
         >
           Вхід

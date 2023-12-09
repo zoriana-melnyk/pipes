@@ -5,7 +5,12 @@ import { AppContext } from '../service/AppContext';
 import { ADD_PRODUCT } from '../service/contextDispatchTypes';
 
 function Products() {
-  const [producs, setProducts] = useState([]);
+  const perPage = 10;
+  const [producs, setProducts] = useState({
+    list: [],
+    initialList: [],
+    totalPages: 0,
+  });
   const [currentPage, setCurrentPage] = useState(1);
   const { dispatch, selectedProducts } = useContext(AppContext);
 
@@ -13,24 +18,42 @@ function Products() {
     dispatch({ type: ADD_PRODUCT, product });
   };
 
-  const onPageChange = (page) => setCurrentPage(page);
-  const perPage = 8;
-  const pagesAmount = Math.ceil(producs.length / perPage);
+  const onPageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  useEffect(() => {
+    const start = (currentPage - 1) * perPage;
+    const end = start + perPage;
+    setProducts({
+      ...producs,
+      list: producs.initialList.slice(start, end),
+    });
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch('/api/product');
       const { data } = await response.json();
-      setProducts(data);
+      setProducts({
+        list: data,
+        initialList: data,
+        totalPages: Math.ceil(data.length / perPage),
+      });
     };
     fetchData();
   }, []);
 
   return (
     <div className="flex flex-col items-center">
-      {producs.length ? (
+      {producs.list.length ? (
         <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-          {producs.map((product) => (
+          {producs.list.map((product) => (
             <ProductCard
               key={product._id}
               product={product}
@@ -45,10 +68,10 @@ function Products() {
         <Spinner size="xl" />
       )}
 
-      {producs.length ? (
+      {producs.totalPages > 1 ? (
         <Pagination
           currentPage={currentPage}
-          totalPages={3}
+          totalPages={producs.totalPages}
           onPageChange={onPageChange}
         />
       ) : null}

@@ -2,6 +2,7 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { AppFooter, Header } from '../components';
 import { Flowbite, Spinner } from 'flowbite-react';
 import { AppContextProvider } from '../service/AppContext';
+import { Toaster } from 'sonner';
 
 const Skeleton = ({ children }) => {
   let initialThemeMode = false;
@@ -38,6 +39,7 @@ const Skeleton = ({ children }) => {
     <Flowbite theme={{ dark: isDarkMode}}>
       <AppContextProvider>
         <Header />
+        <Toaster richColors />
         <Suspense fallback={<Spinner size="xl" />}>
           <main className="main main__container flex flex-col mx-5 my-3">
             {children}

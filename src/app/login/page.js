@@ -9,6 +9,7 @@ import { SET_USER } from '../service/contextDispatchTypes';
 import { ProfileForm } from '../components';
 import { HiUserCircle, HiOutlineUserAdd } from 'react-icons/hi';
 import ButtonGroup from 'flowbite-react/lib/esm/components/Button/ButtonGroup';
+import { toast } from 'sonner';
 
 export default function LoginPage() {
   const [loginState, setLoginState] = useState({
@@ -50,10 +51,12 @@ export default function LoginPage() {
       // store user object in local storage
       setUserAction(data);
       window.localStorage.setItem('user', JSON.stringify(data));
+      toast.success('Signed in successfully');
       // redirect to home page
       push('/');
     } catch (error) {
-      console.log(',,,,,,,', error);
+      toast.error(error.message);
+      console.error(error);
     }
   };
 

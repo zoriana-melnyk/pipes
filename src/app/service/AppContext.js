@@ -1,6 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 import {
   ADD_PRODUCT,
+  PRODUCT_AMOUNT_CHANGE,
   REMOVE_PRODUCT,
   REMOVE_USER,
   SET_USER,
@@ -16,7 +17,10 @@ function appReducer(state, action) {
     case ADD_PRODUCT:
       return {
         ...state,
-        selectedProducts: [...state.selectedProducts, action.product],
+        selectedProducts: [
+          ...state.selectedProducts,
+          { ...action.product, amount: 1, totalPrice: action.product.price },
+        ],
       };
     case REMOVE_PRODUCT:
       return {
@@ -35,6 +39,20 @@ function appReducer(state, action) {
         ...state,
         user: null,
       };
+    case PRODUCT_AMOUNT_CHANGE:
+      return {
+        ...state,
+        selectedProducts: state.selectedProducts.map((product) => {
+          if (product._id === action.payload._id) {
+            return {
+              ...product,
+              amount: action.payload.amount,
+              totalPrice: action.payload.amount * product.price,
+            };
+          }
+          return product;
+        }),
+      };
     default:
       return state;
   }
@@ -45,9 +63,7 @@ function AppContextProvider({ children }) {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
   return (
-    <AppContext.Provider
-      value={{ ...state, dispatch }}
-    >
+    <AppContext.Provider value={{ ...state, dispatch }}>
       {children}
     </AppContext.Provider>
   );

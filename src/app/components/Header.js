@@ -85,11 +85,14 @@ const Header = () => {
 
     return (
       <div className="flex list-none items-center">
-        <Image
-          src={UserIcon}
-          style={{ aspectRatio: '1 / 1', width: '25px', height: 'auto' }}
-          alt="User-Icon"
-        />
+        <div className="relative mx-3 w-8">
+          <Image
+            src={UserIcon}
+            style={{ aspectRatio: '1 / 1', width: '25px', height: 'auto' }}
+            alt="User-Icon"
+          />
+          <NotificationBudge />
+        </div>
         <Navbar.Link
           as={Link}
           href={isLoggedIn ? '/profile' : '/login'}

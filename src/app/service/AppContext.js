@@ -4,6 +4,7 @@ import {
   PRODUCT_AMOUNT_CHANGE,
   REMOVE_PRODUCT,
   REMOVE_USER,
+  UPDATE_USER_CART,
   SET_USER,
 } from './contextDispatchTypes';
 
@@ -29,10 +30,18 @@ function appReducer(state, action) {
           (product) => product._id !== action.product._id
         ),
       };
+
+    // TODO: become to compecated to understand, have to be refactored
     case SET_USER:
       return {
         ...state,
         user: action.payload,
+        selectedProducts:
+          action.payload?.cart?.items.map((item) => ({
+            ...item.product,
+            amount: item.amount,
+            totalPrice: item.amount * item?.product?.price,
+          })) || [],
       };
     case REMOVE_USER:
       return {
@@ -52,6 +61,15 @@ function appReducer(state, action) {
           }
           return product;
         }),
+      };
+
+    case UPDATE_USER_CART:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          cart: action.payload,
+        },
       };
     default:
       return state;

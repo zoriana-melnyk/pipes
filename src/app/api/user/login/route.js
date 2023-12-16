@@ -1,5 +1,5 @@
 import dbConnect from '@/app/lib/dbConnect';
-import { UserModel } from '@/app/models';
+import { CartModel, UserModel } from '@/app/models';
 import { NextResponse } from 'next/server';
 import connectDB from '@/app/lib/dbConnect';
 
@@ -39,6 +39,13 @@ export async function POST(req, res) {
   }
 
   const isMatch = await fondUser.comparePassword(password);
+  if (!fondUser.cart) {
+    const userCart = await CartModel.create({ author: fondUser._id, products: [] });
+    fondUser.cart = userCart._id;
+    fondUser.cartName = fondUser.email;
+    await fondUser.save();
+  }
+
   if (!isMatch) {
     return NextResponse.json(
       {
@@ -52,5 +59,8 @@ export async function POST(req, res) {
   }
   const updatedUser = await fondUser.generateToken();
 
-  return NextResponse.json({ data: updatedUser, ok: true }, { headers: { 'Set-Cookie': `token=${updatedUser.token}` }});
+  return NextResponse.json(
+    { data: updatedUser, ok: true },
+    { headers: { 'Set-Cookie': `token=${updatedUser.token}` } }
+  );
 }

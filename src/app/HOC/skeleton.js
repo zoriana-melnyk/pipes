@@ -3,11 +3,12 @@ import { AppFooter, Header } from '../components';
 import { Flowbite, Spinner } from 'flowbite-react';
 import { Toaster } from 'sonner';
 import { AppContext } from '../service/AppContext';
+import { SET_USER, UPDATE_USER_CART } from '../service/contextDispatchTypes';
 
 const Skeleton = ({ children }) => {
   let initialThemeMode = false;
   const appState = useContext(AppContext);
-  const { user, dispatch } = appState;
+  const { user, dispatch, selectedProducts } = appState;
   const storedUser = user || {};
 
   if (typeof window !== 'undefined') {
@@ -54,11 +55,40 @@ const Skeleton = ({ children }) => {
         }),
       });
       const { data } = await response.json();
-      dispatch({ type: 'SET_USER', payload: data });
+      dispatch({ type: SET_USER, payload: data });
     };
     fetchUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const token = storedUser.token || localStorage.getItem('token');
+
+    if (!token) {
+      return;
+    }
+    // store selected products on server
+    const storeSelectedProducts = async () => {
+      const productsList = [...selectedProducts];
+      if (!token || !productsList.length) {
+        return;
+      }
+      const response = await fetch('/api/cart', {
+        method: 'PUT',
+        body: JSON.stringify({
+          token,
+          products: selectedProducts,
+        }),
+      });
+      const { data } = await response.json();
+      dispatch({ type: UPDATE_USER_CART, payload: data });
+    };
+
+    storeSelectedProducts();
+
+    // TODO: reduce amount of calls
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedProducts]);
 
   return (
     <Flowbite theme={{ dark: isDarkMode }}>

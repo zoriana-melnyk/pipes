@@ -3,3 +3,4 @@ export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 export const SET_USER = 'SET_USER';
 export const REMOVE_USER = 'REMOVE_USER';
 export const PRODUCT_AMOUNT_CHANGE = 'PRODUCT_AMOUNT_CHANGE';
+export const UPDATE_USER_CART = 'UPDATE_USER_CART';

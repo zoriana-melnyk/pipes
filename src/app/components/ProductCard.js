@@ -1,4 +1,4 @@
-import { Button, Card } from 'flowbite-react';
+import { Card, Tooltip } from 'flowbite-react';
 import { toast } from 'sonner';
 
 function ProductCard({ product, actions, isSelected }) {
@@ -30,43 +30,42 @@ function ProductCard({ product, actions, isSelected }) {
           {price} {currency}
         </p>
         {addToCart && (
-          <button
-            onClick={() => {
-              isSelected ? removeFromCart(product) : addToCart(product);
-              !isSelected && toast('Товар додано до кошика', {
-                action: {
-                  label: 'Undo',
-                  onClick: () => removeFromCart(product)
-                },
-              })
-            }}
-            className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800"
+          <Tooltip
+            content={isSelected ? 'Видалити з кошика' : 'Додати в кошик'}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="30"
-              height="30"
-              fill="currentColor"
-              className="bi bi-basket2"
-              viewBox="0 0 17 17"
+            <button
+              onClick={() => {
+                isSelected ? removeFromCart(product) : addToCart(product);
+                !isSelected &&
+                  toast('Товар додано до кошика', {
+                    action: {
+                      label: 'Undo',
+                      onClick: () => removeFromCart(product),
+                    },
+                  });
+              }}
+              className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800"
             >
-              <path d="M4 10a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0zm3 0a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0zm3 0a1 1 0 1 1 2 0v2a1 1 0 0 1-2 0z" />
-              <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-.623l-1.844 6.456a.75.75 0 0 1-.722.544H3.69a.75.75 0 0 1-.722-.544L1.123 8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.163 8l1.714 6h8.246l1.714-6H2.163z" />
-            </svg>
-            <span
-              className={`relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 ${
-                isSelected ? 'bg-opacity-0 dark:bg-opacity-0' : ''
-              }`}
-            >
-              {isSelected ? 'Додано' : 'Обрати'}
-            </span>
-          </button>
-        )}
-
-        {removeFromCart && (
-          <Button color="failure" onClick={() => removeFromCart(product)}>
-            Видалити
-          </Button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                fill="currentColor"
+                className="bi bi-basket2"
+                viewBox="0 0 17 17"
+              >
+                <path d="M4 10a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0zm3 0a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0zm3 0a1 1 0 1 1 2 0v2a1 1 0 0 1-2 0z" />
+                <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-.623l-1.844 6.456a.75.75 0 0 1-.722.544H3.69a.75.75 0 0 1-.722-.544L1.123 8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.163 8l1.714 6h8.246l1.714-6H2.163z" />
+              </svg>
+              <span
+                className={`relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 ${
+                  isSelected ? 'bg-opacity-0 dark:bg-opacity-0' : ''
+                }`}
+              >
+                {isSelected ? 'Додано' : 'Обрати'}
+              </span>
+            </button>
+          </Tooltip>
         )}
       </div>
     </Card>

@@ -5,7 +5,7 @@ import logo from '../img/icon.png';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { AppContext } from '../service/AppContext';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import UserIcon from '../img/icon_user.svg';
 import { REMOVE_USER } from '../service/contextDispatchTypes';
 
@@ -17,22 +17,8 @@ const Header = () => {
 
   const onLogout = () => {
     dispatch({ type: REMOVE_USER });
+    localStorage.removeItem('token');
   };
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const response = await fetch('/api/user/me', {
-        method: 'POST',
-        body: JSON.stringify({
-          token: storedUser.token || localStorage.getItem('token'),
-        }),
-      });
-      const { data } = await response.json();
-      dispatch({ type: 'SET_USER', payload: data });
-    };
-    fetchUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const NotificationBudge = () => {
     const amount = [...selectedProducts].length;
@@ -99,11 +85,14 @@ const Header = () => {
 
     return (
       <div className="flex list-none items-center">
-        <Image
-          src={UserIcon}
-          style={{ aspectRatio: '1 / 1', width: '25px', height: 'auto' }}
-          alt="User-Icon"
-        />
+        <div className="relative mx-3 w-8">
+          <Image
+            src={UserIcon}
+            style={{ aspectRatio: '1 / 1', width: '25px', height: 'auto' }}
+            alt="User-Icon"
+          />
+          <NotificationBudge />
+        </div>
         <Navbar.Link
           as={Link}
           href={isLoggedIn ? '/profile' : '/login'}

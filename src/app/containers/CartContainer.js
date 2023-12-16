@@ -83,7 +83,10 @@ function CartContainer() {
           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
             {/* total */}
             <Table.Cell colSpan="5" className="text-right font-bold">
-              Загалом до сплати: {selectedProducts.map((p) => p.totalPrice)}
+              Загалом до сплати:{' '}
+              {selectedProducts.reduce((acc, cur) => {
+                return acc + Number(cur.totalPrice);
+              }, 0)}
             </Table.Cell>
           </Table.Row>
         </Table.Body>

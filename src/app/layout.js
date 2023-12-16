@@ -4,6 +4,7 @@ import { Sofia_Sans } from 'next/font/google';
 import './globals.css';
 import Skeleton from './HOC/skeleton';
 import { usePathname } from 'next/navigation';
+import { AppContextProvider } from './service/AppContext';
 
 const sofia = Sofia_Sans({ subsets: ['latin'], weight: '600' });
 
@@ -55,7 +56,9 @@ export default function RootLayout({ children }) {
         className={`${sofia.className} bg-white bg-slate-200 dark:bg-slate-800`}
         suppressHydrationWarning={true}
       >
-        <Skeleton>{children}</Skeleton>
+        <AppContextProvider>
+          <Skeleton>{children}</Skeleton>
+        </AppContextProvider>
       </body>
     </html>
   );

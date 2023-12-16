@@ -80,6 +80,12 @@ function CartContainer() {
               </Table.Row>
             );
           })}
+          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+            {/* total */}
+            <Table.Cell colSpan="5" className="text-right font-bold">
+              Загалом до сплати: {selectedProducts.map((p) => p.totalPrice)}
+            </Table.Cell>
+          </Table.Row>
         </Table.Body>
       </Table>
     </div>

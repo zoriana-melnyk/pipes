@@ -10,10 +10,13 @@ export async function POST(req, res) {
 
   const hashedPassword = await hashPassword(data.password);
 
-  const result = await UserModel.create({
-    ...data,
-    password: hashedPassword,
-  });
-
-  return NextResponse.json({ message: 'ok', data: result });
+  try {
+    const result = await UserModel.create({
+      ...data,
+      password: hashedPassword,
+    });
+    return NextResponse.json({ message: 'ok', data: result });
+  } catch (error) {
+    return NextResponse.json({ message: error.message }, { status: 404 });
+  }
 }

@@ -1,9 +1,10 @@
 import dbConnect from '@/app/lib/dbConnect';
 import { UserModel } from '@/app/models';
 import { NextResponse } from 'next/server';
-import { verifyPassword } from '@/app/lib/auth';
+import connectDB from '@/app/lib/dbConnect';
 
 export async function POST(req, res) {
+  await connectDB();
   // next.js post route handler to login user
   // get data from request body
   const data = await req.json();
@@ -11,35 +12,45 @@ export async function POST(req, res) {
   const { email, password } = data;
   // check if email and password is provided
   if (!email || !password) {
-    return NextResponse.next({
-      status: 400,
-      message: 'Please provide email and password',
-    });
+    return NextResponse.json(
+      {
+        message: 'Please provide email and password',
+        ok: false,
+      },
+      {
+        status: 400,
+      }
+    );
   }
   // connect to database
   await dbConnect();
   // find user by email in database by using mongoose model
   const fondUser = await UserModel.findOne({ email });
-
-  // check if user is found and password is correct
-  if (!fondUser || !(await verifyPassword(password, fondUser.password))) {
+  if (!fondUser) {
     return NextResponse.json(
       {
-        status: 401,
-        message: 'Invalid credentials',
+        message: 'User not found',
+        ok: false,
+      },
+      {
+        status: 404,
+      }
+    );
+  }
+
+  const isMatch = await fondUser.comparePassword(password);
+  if (!isMatch) {
+    return NextResponse.json(
+      {
+        message: 'Password Failed',
+        ok: false,
       },
       {
         status: 401,
       }
     );
   }
-  // create session object
-  const session = {
-    user: {
-      id: fondUser._id,
-      email: fondUser.email,
-    },
-  };
-  // return session object
-  return NextResponse.json({ session, data: fondUser });
+  const updatedUser = await fondUser.generateToken();
+
+  return NextResponse.json({ data: updatedUser, ok: true }, { headers: { 'Set-Cookie': `token=${updatedUser.token}` }});
 }

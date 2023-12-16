@@ -42,15 +42,16 @@ export default function LoginPage() {
         body: JSON.stringify(body),
       });
 
-      const { data, status } = await response.json();
+      const { data, ok } = await response.json();
 
-      if (status === 401) {
+      if (!ok) {
         throw new Error('Invalid credentials');
       }
 
       // store user object in local storage
       setUserAction(data);
       window.localStorage.setItem('user', JSON.stringify(data));
+      window.localStorage.setItem('token', data.token);
       toast.success('Signed in successfully');
       // redirect to home page
       push('/');

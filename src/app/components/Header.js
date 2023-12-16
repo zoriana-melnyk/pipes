@@ -5,7 +5,7 @@ import logo from '../img/icon.png';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { AppContext } from '../service/AppContext';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import UserIcon from '../img/icon_user.svg';
 import { REMOVE_USER } from '../service/contextDispatchTypes';
 
@@ -18,6 +18,21 @@ const Header = () => {
   const onLogout = () => {
     dispatch({ type: REMOVE_USER });
   };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const response = await fetch('/api/user/me', {
+        method: 'POST',
+        body: JSON.stringify({
+          token: storedUser.token || localStorage.getItem('token'),
+        }),
+      });
+      const { data } = await response.json();
+      dispatch({ type: 'SET_USER', payload: data });
+    };
+    fetchUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const NotificationBudge = () => {
     const amount = [...selectedProducts].length;

@@ -17,6 +17,7 @@ const Header = () => {
 
   const onLogout = () => {
     dispatch({ type: REMOVE_USER });
+    localStorage.removeItem('token');
   };
 
   const NotificationBudge = () => {

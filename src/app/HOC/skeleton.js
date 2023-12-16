@@ -43,10 +43,14 @@ const Skeleton = ({ children }) => {
   // get auth data if user token is stored
   useEffect(() => {
     const fetchUser = async () => {
+      const token = storedUser.token || localStorage.getItem('token');
+      if (!token) {
+        return;
+      }
       const response = await fetch('/api/user/me', {
         method: 'POST',
         body: JSON.stringify({
-          token: storedUser.token || localStorage.getItem('token'),
+          token,
         }),
       });
       const { data } = await response.json();

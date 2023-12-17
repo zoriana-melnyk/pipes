@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../service/AppContext';
 import { SET_USER } from '../service/contextDispatchTypes';
+import { toast } from 'sonner';
 
 function ProfileForm() {
   const initialUser = {
@@ -16,7 +17,7 @@ function ProfileForm() {
   };
   const [user, setUser] = useState(initialUser);
   const { push } = useRouter();
-  const { dispatch } = useContext(AppContext);
+  const { dispatch, user: storedUser } = useContext(AppContext);
 
   const setUserAction = (user) => {
     dispatch({ type: SET_USER, payload: user });
@@ -25,7 +26,8 @@ function ProfileForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // get user data from form
-    const { firstName, lastName, email, phoneNumber, password } = event.target.elements;
+    const { firstName, lastName, email, phoneNumber, password } =
+      event.target.elements;
 
     // create user object
     const body = {
@@ -37,9 +39,21 @@ function ProfileForm() {
       password: password.value,
     };
 
+    // filter empty values
+    Object.keys(body).forEach((key) => {
+      if (!body[key]) {
+        delete body[key];
+      }
+    });
+
     try {
-      const response = await fetch('/api/user/register', {
-        method: 'POST',
+      const isExistingUser = storedUser?.email;
+      const apiPath = isExistingUser
+        ? `/api/user/${storedUser._id}`
+        : '/api/user/register';
+      const apiMethod = isExistingUser ? 'PUT' : 'POST';
+      const response = await fetch(apiPath, {
+        method: apiMethod,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -50,8 +64,13 @@ function ProfileForm() {
       // store user object in local storage
       setUserAction(data);
       window.localStorage.setItem('user', JSON.stringify(data));
+      toast.success(
+        isExistingUser
+          ? 'User updated successfully'
+          : 'User created successfully'
+      );
       // redirect to home page
-      push('/');
+      isExistingUser ? push('/') : push('/login');
     } catch (error) {
       console.log(error);
     }
@@ -75,18 +94,17 @@ function ProfileForm() {
   };
 
   useEffect(() => {
-    // const blobUrl = getBase64ImageSource();
-    const user = JSON.parse(window.localStorage.getItem('user') || '{}');
-    if (user) {
+    const { password, ...restUser } = storedUser || {};
+    if (restUser.email) {
       // set avatar to state in blob format
       setUser({
         ...initialUser,
-        ...user,
+        ...restUser,
       });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [storedUser]);
 
   // TODO: reset user data
   return (
@@ -97,7 +115,7 @@ function ProfileForm() {
             <Label className="block mb-2 text-bold font-medium">
               First Name
               <TextInput
-                defaultValue={user.nickname}
+                defaultValue={user.firstName}
                 name="firstName"
                 placeholder="Last name"
                 required
@@ -107,7 +125,7 @@ function ProfileForm() {
             <Label className="block mb-2 text-bold font-medium">
               Last Name
               <TextInput
-                defaultValue={user.nickname}
+                defaultValue={user.lastName}
                 name="lastName"
                 placeholder="Last name"
                 required

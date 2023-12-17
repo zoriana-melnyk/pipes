@@ -13,6 +13,12 @@ function CartContainer() {
 
   const removeFromCart = (product) => {
     dispatch({ type: REMOVE_PRODUCT, product });
+    fetch('/api/cart', {
+      method: 'DELETE',
+      body: JSON.stringify({
+        _id: product._id,
+      }),
+    });
   };
 
   const onAmountChange = (product, amount) => {

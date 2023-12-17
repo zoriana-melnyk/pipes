@@ -37,7 +37,7 @@ function appReducer(state, action) {
         ...state,
         user: action.payload,
         selectedProducts:
-          action.payload?.cart?.items.map((item) => ({
+          action.payload?.cart?.items?.map((item) => ({
             ...item.product,
             amount: item.amount,
             totalPrice: item.amount * item?.product?.price,

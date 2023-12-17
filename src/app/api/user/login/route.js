@@ -40,7 +40,7 @@ export async function POST(req, res) {
 
   const isMatch = await fondUser.comparePassword(password);
   if (!fondUser.cart) {
-    const userCart = await CartModel.create({ author: fondUser._id, products: [] });
+    const userCart = await CartModel.create({ author: fondUser._id, name: fondUser.email,  products: [] });
     fondUser.cart = userCart._id;
     fondUser.cartName = fondUser.email;
     await fondUser.save();

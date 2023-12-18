@@ -39,7 +39,7 @@ const Header = () => {
   const t = (key) => vocabulary[lang][key];
   const pathname = usePathname();
   const appState = useContext(AppContext);
-  const { selectedProducts, user, dispatch } = appState;
+  const { selectedProducts, user, dispatch, isUserLoading } = appState;
   const storedUser = user || {};
 
   const onLogout = () => {
@@ -62,9 +62,7 @@ const Header = () => {
   };
 
   const UserSection = ({ children }) => {
-    // TODO: login check
     const isLoggedIn = storedUser.email;
-    const token = storedUser.token || localStorage.getItem('token');
 
     if (isLoggedIn) {
       return (
@@ -115,7 +113,7 @@ const Header = () => {
 
     return (
       <div className="flex list-none items-center">
-        {!isLoggedIn && token ? (
+        {!isLoggedIn && isUserLoading ? (
           <Spinner />
         ) : (
           <>

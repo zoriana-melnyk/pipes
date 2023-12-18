@@ -24,6 +24,8 @@ export default function RootLayout({ children }) {
         return 'Search';
       case '/login':
         return 'Login';
+      case '/profile':
+        return 'Profile';
       default:
         return 'Page Not Found';
     }
@@ -41,6 +43,8 @@ export default function RootLayout({ children }) {
         return 'Search page of the Next.js Boilerplate';
       case '/login':
         return 'Login page of the Next.js Boilerplate';
+      case '/profile':
+        return 'Profile page of the Next.js Boilerplate';
       default:
         return 'Page Not Found';
     }

@@ -9,6 +9,7 @@ import {
 } from './contextDispatchTypes';
 
 const initialState = {
+  isUserLoading: true,
   selectedProducts: [],
   user: null,
 };
@@ -35,6 +36,7 @@ function appReducer(state, action) {
     case SET_USER:
       return {
         ...state,
+        isUserLoading: false,
         user: action.payload,
         selectedProducts:
           action.payload?.cart?.items?.map((item) => ({

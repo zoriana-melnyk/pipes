@@ -9,7 +9,8 @@ import {
 import { Button, Spinner, Table } from 'flowbite-react';
 
 function CartContainer() {
-  const { selectedProducts, dispatch, isUserLoading } = useContext(AppContext);
+  const { selectedProducts, dispatch, isUserLoading, user } =
+    useContext(AppContext);
 
   const removeFromCart = (product) => {
     // ask user if he sure
@@ -30,6 +31,18 @@ function CartContainer() {
       return;
     }
     dispatch({ type: PRODUCT_AMOUNT_CHANGE, payload: { ...product, amount } });
+  };
+
+  const onCheckout = () => {
+    fetch('/api/cart/checkout', {
+      method: 'POST',
+      body: JSON.stringify({
+        token: user.token,
+      }),
+      headers: {
+        Cookie: `token=${user.token}`,
+      },
+    });
   };
 
   if (isUserLoading) {
@@ -100,11 +113,17 @@ function CartContainer() {
           })}
           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
             {/* total */}
-            <Table.Cell colSpan="5" className="text-right font-bold">
+            <Table.Cell colSpan="4" className="text-right font-bold">
               Загалом до сплати:{' '}
               {selectedProducts.reduce((acc, cur) => {
                 return acc + Number(cur.totalPrice);
               }, 0)}
+            </Table.Cell>
+            <Table.Cell className="text-right font-bold">
+              {/* checkout action */}
+              <Button onClick={onCheckout} color="success">
+                Оформити
+              </Button>
             </Table.Cell>
           </Table.Row>
         </Table.Body>

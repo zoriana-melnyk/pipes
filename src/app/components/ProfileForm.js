@@ -78,6 +78,10 @@ function ProfileForm() {
 
   const imageUpload = (e) => {
     const file = e.target.files[0];
+    if (file.size > 2097152) {
+      toast.error('File have to be under 2Mbit');
+      return;
+    }
     const reader = new FileReader();
     reader.onloadend = () => {
       const base64StringUS = reader.result

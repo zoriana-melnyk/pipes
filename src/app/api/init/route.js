@@ -39,14 +39,14 @@ const usersMock = [
     secondsName: 'admin',
     email: 'admin@gmail.com',
     phoneNumber: '380000000000',
-    password: 'admin',
+    password: 'Test1234',
   },
   {
     firstName: 'dev',
     secondsName: 'dev',
     email: 'dev@gmail.com',
     phoneNumber: '380000000000',
-    password: 'dev',
+    password: 'Test1234',
   }
 ];
 

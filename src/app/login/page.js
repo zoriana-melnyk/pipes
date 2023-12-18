@@ -1,9 +1,8 @@
 'use client';
 
 import { Button, Label, TextInput, Tabs } from 'flowbite-react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext } from '../service/AppContext';
 import { SET_USER } from '../service/contextDispatchTypes';
 import { ProfileForm } from '../components';

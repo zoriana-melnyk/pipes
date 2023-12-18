@@ -32,11 +32,15 @@ const AppFooter = () => {
           </Footer.LinkGroup>
           <div>
             <Label>Ми на карті</Label>
-            <Image
-              src={map}
-              style={{ aspectRatio: '1 / 1', width: '100px', height: 'auto' }}
-              alt="map"
-            />
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2564.9666307516773!2d24.241885576917394!3d49.9932350715084!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473acfcb5a186407%3A0x711c55ddaaf4a40c!2sTov%20Polipresmash!5e0!3m2!1sen!2sua!4v1702899616041!5m2!1sen!2sua"
+              width="400"
+              height="350"
+              style={{ border: '0' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
           </div>
         </div>
 

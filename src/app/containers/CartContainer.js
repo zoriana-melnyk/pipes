@@ -6,12 +6,16 @@ import {
   REMOVE_PRODUCT,
   PRODUCT_AMOUNT_CHANGE,
 } from '../service/contextDispatchTypes';
-import { Button, Table } from 'flowbite-react';
+import { Button, Spinner, Table } from 'flowbite-react';
 
 function CartContainer() {
-  const { selectedProducts, dispatch } = useContext(AppContext);
+  const { selectedProducts, dispatch, isUserLoading } = useContext(AppContext);
 
   const removeFromCart = (product) => {
+    // ask user if he sure
+    if (!window.confirm('Ви впевнені, що хочете видалити цей товар?')) {
+      return;
+    }
     dispatch({ type: REMOVE_PRODUCT, product });
     fetch('/api/cart', {
       method: 'DELETE',
@@ -28,12 +32,19 @@ function CartContainer() {
     dispatch({ type: PRODUCT_AMOUNT_CHANGE, payload: { ...product, amount } });
   };
 
+  if (isUserLoading) {
+    return (
+      <div className="flex justify-center">
+        <Spinner size="xl" />
+      </div>
+    );
+  }
   if (!selectedProducts.length) {
     return <h1 className="text-center">Кошик пустий</h1>;
   }
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto my-4">
       <Table hoverable>
         <Table.Head>
           <Table.HeadCell>Назва</Table.HeadCell>
@@ -59,6 +70,7 @@ function CartContainer() {
                 <Table.Cell>
                   <div className="flex items-center">
                     <Button
+                      disabled={product.amount === 1}
                       onClick={() =>
                         onAmountChange(product, (product.amount || 1) - 1)
                       }

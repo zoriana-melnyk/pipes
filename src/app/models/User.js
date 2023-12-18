@@ -18,6 +18,9 @@ const userSchema = new mongoose.Schema(
     avatarUrl: String,
     cart: { type: mongoose.Schema.Types.ObjectId, ref: collectionNames.cart },
     role: { default: 'user', type: String },
+    orders: [
+      { type: mongoose.Schema.Types.ObjectId, ref: collectionNames.order },
+    ],
     password: {
       type: String,
       required: true,

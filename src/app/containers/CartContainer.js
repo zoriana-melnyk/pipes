@@ -6,12 +6,17 @@ import {
   REMOVE_PRODUCT,
   PRODUCT_AMOUNT_CHANGE,
 } from '../service/contextDispatchTypes';
-import { Button, Table } from 'flowbite-react';
+import { Button, Spinner, Table } from 'flowbite-react';
 
 function CartContainer() {
-  const { selectedProducts, dispatch } = useContext(AppContext);
+  const { selectedProducts, dispatch, isUserLoading, user } =
+    useContext(AppContext);
 
   const removeFromCart = (product) => {
+    // ask user if he sure
+    if (!window.confirm('Ви впевнені, що хочете видалити цей товар?')) {
+      return;
+    }
     dispatch({ type: REMOVE_PRODUCT, product });
     fetch('/api/cart', {
       method: 'DELETE',
@@ -28,12 +33,31 @@ function CartContainer() {
     dispatch({ type: PRODUCT_AMOUNT_CHANGE, payload: { ...product, amount } });
   };
 
+  const onCheckout = () => {
+    fetch('/api/cart/checkout', {
+      method: 'POST',
+      body: JSON.stringify({
+        token: user.token,
+      }),
+      headers: {
+        Cookie: `token=${user.token}`,
+      },
+    });
+  };
+
+  if (isUserLoading) {
+    return (
+      <div className="flex justify-center">
+        <Spinner size="xl" />
+      </div>
+    );
+  }
   if (!selectedProducts.length) {
     return <h1 className="text-center">Кошик пустий</h1>;
   }
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto my-4">
       <Table hoverable>
         <Table.Head>
           <Table.HeadCell>Назва</Table.HeadCell>
@@ -59,6 +83,7 @@ function CartContainer() {
                 <Table.Cell>
                   <div className="flex items-center">
                     <Button
+                      disabled={product.amount === 1}
                       onClick={() =>
                         onAmountChange(product, (product.amount || 1) - 1)
                       }
@@ -88,11 +113,17 @@ function CartContainer() {
           })}
           <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
             {/* total */}
-            <Table.Cell colSpan="5" className="text-right font-bold">
+            <Table.Cell colSpan="4" className="text-right font-bold">
               Загалом до сплати:{' '}
               {selectedProducts.reduce((acc, cur) => {
                 return acc + Number(cur.totalPrice);
               }, 0)}
+            </Table.Cell>
+            <Table.Cell className="text-right font-bold">
+              {/* checkout action */}
+              <Button onClick={onCheckout} color="success">
+                Оформити
+              </Button>
             </Table.Cell>
           </Table.Row>
         </Table.Body>

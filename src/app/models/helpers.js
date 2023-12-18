@@ -3,5 +3,6 @@ export const collectionNames = {
     cart: 'Cart',
     product: 'Product',
     productCategory: 'Product_category',
-    cartProduct: 'Cart_product'
+    cartProduct: 'Cart_product',
+    order: 'Order',
 }

@@ -6,10 +6,18 @@ export async function POST(req, res) {
   await dbConnect();
   const { token } = await req.json();
   const user = await UserModel.findByToken(token);
-  await user.populate({
-    path: 'cart',
-    populate: { path: 'items', populate: { path: 'product' } },
-  });
+  await user
+    .populate([
+      {
+        path: 'cart',
+        populate: { path: 'items', populate: { path: 'product' } },
+      },
+      {
+        path: 'orders',
+        populate: { path: 'items', populate: { path: 'product' } },
+      }
+    ])
+    ;
   if (!user) {
     return NextResponse.json(
       {

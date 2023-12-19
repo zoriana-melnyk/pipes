@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Label, TextInput, Tabs } from 'flowbite-react';
+import { Button, Label, TextInput } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
 import { useContext, useState } from 'react';
 import { AppContext } from '../service/AppContext';

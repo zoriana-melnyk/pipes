@@ -20,6 +20,22 @@ const Skeleton = ({ children }) => {
 
   const [isDarkMode, setIsDarkMode] = useState(initialThemeMode);
 
+  const fetchUser = async () => {
+    const token = storedUser.token || localStorage.getItem('token');
+    if (!token) {
+      dispatch({ type: SET_USER, payload: {} });
+      return;
+    }
+    const response = await fetch('/api/user/me', {
+      method: 'POST',
+      body: JSON.stringify({
+        token,
+      }),
+    });
+    const { data } = await response.json();
+    dispatch({ type: SET_USER, payload: data });
+  };
+
   // theme change listener
   useEffect(() => {
     // listener dor theme change
@@ -43,20 +59,6 @@ const Skeleton = ({ children }) => {
 
   // get auth data if user token is stored
   useEffect(() => {
-    const fetchUser = async () => {
-      const token = storedUser.token || localStorage.getItem('token');
-      if (!token) {
-        return;
-      }
-      const response = await fetch('/api/user/me', {
-        method: 'POST',
-        body: JSON.stringify({
-          token,
-        }),
-      });
-      const { data } = await response.json();
-      dispatch({ type: SET_USER, payload: data });
-    };
     fetchUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -89,6 +91,13 @@ const Skeleton = ({ children }) => {
     // TODO: reduce amount of calls
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProducts]);
+
+  useEffect(() => {
+    window.addEventListener('user:update', (e) => {
+      fetchUser();
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Flowbite theme={{ dark: isDarkMode }}>

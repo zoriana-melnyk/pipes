@@ -4,7 +4,6 @@ import { Footer, Label } from 'flowbite-react';
 import Image from 'next/image';
 import ua_region from '../img/logo_mob_ua_region.svg';
 import allbiz_new from '../img/allbiz_logo_new.svg';
-import map from '../img/map.png';
 import Link from 'next/link';
 
 const AppFooter = () => {

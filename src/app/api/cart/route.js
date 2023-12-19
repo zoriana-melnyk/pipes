@@ -60,7 +60,16 @@ export async function PUT(req, res) {
 
   const cart = await CartModel.findById(foundUser.cart);
   cart.items = cartProducts.map((product) => product._id);
-  await cart.save();
+  cart.totalPrice = products.reduce(
+    (acc, product) => acc + Number(product.price) * Number(product.amount),
+    0
+  ) || 0;
+  cart.currency = 'UAH';
+
+  await CartModel.findByIdAndUpdate(cart._id, cart, {
+    new: true,
+    strict: false
+  });
 
   // populate cart with products
   await cart.populate('items');

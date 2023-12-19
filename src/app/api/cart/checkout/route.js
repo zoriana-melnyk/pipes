@@ -19,6 +19,7 @@ export const POST = async (req, route) => {
   const newOrder = await OrderModel.create({
     name: foundUser.email,
     items: foundUser.cart.items,
+    totalPrice: foundUser.cart.totalPrice,
     author: foundUser._id,
   });
 
@@ -29,5 +30,5 @@ export const POST = async (req, route) => {
   await foundUser.cart.updateOne({ $set: { items: [] } });
 
   // return new order
-  return NextResponse.json({ data: newOrder });
+  return NextResponse.json({ ok: true, data: newOrder });
 };

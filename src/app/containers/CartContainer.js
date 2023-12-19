@@ -1,17 +1,23 @@
 'use client';
 
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext } from '../service/AppContext';
 import {
   REMOVE_PRODUCT,
   PRODUCT_AMOUNT_CHANGE,
 } from '../service/contextDispatchTypes';
-import { Button, Spinner, Table } from 'flowbite-react';
+import { Button, Label, Spinner, Table } from 'flowbite-react';
 import { UserOrders } from '../components';
+import { toast } from 'sonner';
 
 function CartContainer() {
-  const { selectedProducts, dispatch, isUserLoading, user } =
-    useContext(AppContext);
+  const {
+    selectedProducts,
+    dispatch,
+    isUserLoading,
+    user = {},
+  } = useContext(AppContext);
+  const [cartOrdering, setCartOrdering] = useState(false);
 
   const removeFromCart = (product) => {
     // ask user if he sure
@@ -34,8 +40,9 @@ function CartContainer() {
     dispatch({ type: PRODUCT_AMOUNT_CHANGE, payload: { ...product, amount } });
   };
 
-  const onCheckout = () => {
-    fetch('/api/cart/checkout', {
+  const onCheckout = async () => {
+    setCartOrdering(true);
+    const response = await fetch('/api/cart/checkout', {
       method: 'POST',
       body: JSON.stringify({
         token: user.token,
@@ -44,6 +51,15 @@ function CartContainer() {
         Cookie: `token=${user.token}`,
       },
     });
+    const res = await response.json();
+    if (res.ok) {
+      // dispacch custom event to update user
+      window.dispatchEvent(new CustomEvent('user:update'));
+      toast.success('Замовлення оформлено');
+    } else {
+      toast.error('Помилка оформлення замовлення');
+    }
+    setCartOrdering(false);
   };
 
   if (isUserLoading) {
@@ -56,9 +72,13 @@ function CartContainer() {
 
   return (
     <>
-      <UserOrders orders={user.orders} />
+      <UserOrders orders={user?.orders || []} />
+      <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
       {selectedProducts.length ? (
         <div className="overflow-x-auto my-4">
+          <Label className="flex w-full text-center justify-center">
+            Обрані товари
+          </Label>
           <Table hoverable>
             <Table.Head>
               <Table.HeadCell>Назва</Table.HeadCell>
@@ -122,7 +142,11 @@ function CartContainer() {
                 </Table.Cell>
                 <Table.Cell className="text-right font-bold">
                   {/* checkout action */}
-                  <Button onClick={onCheckout} color="success">
+                  <Button
+                    disabled={cartOrdering}
+                    onClick={onCheckout}
+                    color="success"
+                  >
                     Оформити
                   </Button>
                 </Table.Cell>

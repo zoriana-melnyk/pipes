@@ -5,6 +5,10 @@ const OrderSchema = mongoose.Schema(
   {
     name: String,
     author: { type: mongoose.Schema.Types.ObjectId, ref: collectionNames.user },
+    totalPrice: {
+      type: Number,
+      default: 0,
+    },
     status: {
       type: String,
       enum: ['pending', 'processing', 'completed', 'canceled'],

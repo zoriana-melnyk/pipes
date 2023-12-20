@@ -66,12 +66,12 @@ const SearchContainer = () => {
   return (
     <>
       <div className="my-4">
-        <Label>Search Products</Label>
+        <Label>Пошук продуктів</Label>
         <TextInput
           type="search"
           value={query}
           onChange={handleSearch}
-          placeholder="Search for products..."
+          placeholder="Введіть назву товару..."
         />
       </div>
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">

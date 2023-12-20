@@ -117,21 +117,21 @@ function ProfileForm() {
         <div className="mb-6">
           <div className="flex gap-2">
             <Label className="block mb-2 text-bold font-medium">
-              First Name
+              Прізвище
               <TextInput
                 defaultValue={user.firstName}
                 name="firstName"
-                placeholder="Last name"
+                placeholder="ваше прізвище"
                 required
               />
             </Label>
 
             <Label className="block mb-2 text-bold font-medium">
-              Last Name
+              Імʼя
               <TextInput
                 defaultValue={user.lastName}
                 name="lastName"
-                placeholder="Last name"
+                placeholder="ваше імʼя"
                 required
               />
             </Label>
@@ -142,26 +142,26 @@ function ProfileForm() {
             <TextInput
               defaultValue={user.email}
               name="email"
-              placeholder="email"
+              placeholder="ваш email"
               required
             />
           </Label>
           <Label>
-            Phone number
+            Номер телефону
             <TextInput
               defaultValue={user.phoneNumber}
               name="phoneNumber"
               label="Phone number"
-              placeholder="Phone number"
+              placeholder="введіть номер телефону"
             />
           </Label>
           <Label>
-            Password
+            Пароль
             <TextInput
               defaultValue={user.password}
               type="password"
               name="password"
-              placeholder="password"
+              placeholder="введіть пароль"
             />
           </Label>
         </div>
@@ -187,7 +187,7 @@ function ProfileForm() {
         </div>
 
         <Button type="submit" color="blue">
-          Submit
+          Зареєструватися
         </Button>
       </form>
     </div>

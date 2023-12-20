@@ -74,13 +74,13 @@ export default function LoginPage() {
           color={loginState.isLogin ? 'blue' : 'gray'}
           onClick={onMethodSwitch}
         >
-          Login <HiUserCircle />
+          Увійти <HiUserCircle />
         </Button>
         <Button
           color={!loginState.isLogin ? 'blue' : 'gray'}
           onClick={onMethodSwitch}
         >
-          Register <HiOutlineUserAdd />
+          Зареєструватися <HiOutlineUserAdd />
         </Button>
       </ButtonGroup>
       <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
@@ -88,21 +88,21 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit}>
           <Label className="block mb-2 text-bold font-medium">
             Email
-            <TextInput name="email" placeholder="email" required />
+            <TextInput name="email" placeholder="введіть email" required />
           </Label>
 
           <Label className="block mb-2 text-bold font-medium">
-            Password
+            Пароль
             <TextInput
               type="password"
               name="password"
-              placeholder="password"
+              placeholder="введіть пароль"
               required
             />
           </Label>
 
           <Button type="submit" color="blue">
-            Submit
+            Увійти
           </Button>
         </form>
       ) : (

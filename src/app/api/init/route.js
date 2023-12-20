@@ -53,7 +53,7 @@ const usersMock = [
 const productsMock = [
   {
     name: 'Плівка поліетиленова',
-    description: 'Плівка поліетиленова: рукав, пів рукав, полотно.Первинна, вторинна, кольорова.',
+    description: 'Плівка поліетиленова з первинної сировини',
     price: 10,
     currency: 'грн',
     imageSrc: 'pipes_film.png',
@@ -61,7 +61,7 @@ const productsMock = [
   },
   {
     name: 'Труба для теплої підлоги',
-    description: 'Труба для теплої підлоги SLQ Tece 16x2',
+    description: 'Труба поліетиленова для теплої підлоги',
     price: 10,
     currency: 'грн',
     imageSrc: 'pipes_floor.png',
@@ -106,6 +106,14 @@ const productsMock = [
     price: 100,
     currency: 'грн',
     imageSrc: 'pipes_floor.png',
+    category: 'category id'
+  },
+  {
+    name: 'Плівка поліетиленова',
+    description: 'Плівка поліетиленова з вторинної сировини',
+    price: 100,
+    currency: 'грн',
+    imageSrc: 'pipes_black_film.jpg',
     category: 'category id'
   },
 ]
